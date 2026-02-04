@@ -16,8 +16,8 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,wav,mp3,ttf
 
 # (list) Application requirements
-# comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,pygame
+# [수정됨] numpy가 반드시 포함되어야 합니다!
+requirements = python3, pygame, numpy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -59,18 +59,15 @@ android.presplash_color = #000000
 android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
-# GitHub Actions 오류 방지를 위해 자동 설정(주석 처리)
 #android.api = 31
 
 # (int) Minimum API your APK will support.
 #android.minapi = 21
 
 # (int) Android SDK version to use
-# GitHub Actions 오류 방지를 위해 자동 설정(주석 처리)
 #android.sdk = 33
 
 # (str) Android NDK version to use
-# GitHub Actions 오류 방지를 위해 자동 설정(주석 처리)
 #android.ndk = 25b
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
@@ -86,8 +83,8 @@ android.private_storage = True
 #android.force_build_tools = False
 
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-# 호환성을 위해 v7a와 v8a 둘 다 포함하는 것이 좋습니다.
-android.archs = arm64-v8a, armeabi-v7a
+# [최적화] 테스트 시간을 줄이기 위해 64비트만 우선 빌드합니다. (배포시에는 둘 다 포함 가능)
+android.archs = arm64-v8a
 
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
@@ -105,7 +102,6 @@ android.allow_backup = True
 #android.manifest.orientation = landscape
 
 # (bool) Indicate whether the screen should stay on
-# Don't sleep while playing the game
 android.wakelock = True
 
 # (str) The format used to package the app for release mode (aab or apk or aar).
@@ -121,7 +117,7 @@ android.wakelock = True
 # (str) python-for-android fork to use, defaults to upstream (kivy)
 #p4a.fork = kivy
 
-# (str) python-for-android branch to use, defaults to master
+# [수정됨] master 브랜치는 불안정하므로 주석 처리하여 안정 버전을 사용합니다.
 #p4a.branch = master
 
 # (str) Bootstrap to use for android builds
@@ -163,22 +159,3 @@ warn_on_root = 1
 
 # (str) Path to build output (i.e. .apk, .aab, .ipa) storage
 # bin_dir = ./bin
-
-# -----------------------------------------------------------------------------
-# List as sections
-#
-# You can define all the "list" as [section:key].
-# Each line will be considered as a option to the list.
-# Let's take [app] / source.exclude_patterns.
-# Instead of doing:
-#
-#     [app]
-#     source.exclude_patterns = license,data/audio/*.wav,data/images/original/*
-#
-# This can be translated to:
-#
-#     [app:source.exclude_patterns]
-#     license
-#     data/audio/*.wav
-#     data/images/original/*
-#
